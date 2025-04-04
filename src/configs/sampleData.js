@@ -28,6 +28,7 @@ export const sampleData = {
       { name: 'Mumbai', value: 400 },
       { name: 'Delhi', value: 300 },
       { name: 'Bangalore', value: 300 },
+      { name: 'Kolkata', value: 300 },
       { name: 'Others', value: 100 },
     ],
     colors: ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']

@@ -85,7 +85,7 @@ const DataTable: React.FC<DataTableProps> = ({ title, subtitle, data, columns })
         height: 16, 
         width: 16,
         ml: 0.5,
-        color: sortConfig.key === key ? '#2e7d32' : '#757575'
+        color: sortConfig.key === key ? '#027056' : '#757575'
       }}
     >
       {sortConfig.key === key && sortConfig.direction === 'asc' ? (
@@ -142,6 +142,24 @@ const DataTable: React.FC<DataTableProps> = ({ title, subtitle, data, columns })
                     indeterminate={selectedRows.length > 0 && selectedRows.length < data.length}
                     checked={data.length > 0 && selectedRows.length === data.length}
                     onChange={handleSelectAll}
+                    sx={{
+                      '& .MuiSvgIcon-root': {
+                        fontSize: 16,
+                      },
+                      '& .MuiCheckbox-root': {
+                        padding: 0,
+                      },
+                      '& .MuiCheckbox-root .MuiSvgIcon-root': {
+                        border: '1px solid rgba(0, 0, 0, 0.1)',
+                        borderRadius: '2px',
+                      },
+                      '&.Mui-checked': {
+                        color: '#027056',
+                      },
+                      '&.MuiCheckbox-indeterminate': {
+                        color: '#027056',
+                      }
+                    }}
                   />
                 </TableCell>
                 {columns.map((column) => (
@@ -185,7 +203,26 @@ const DataTable: React.FC<DataTableProps> = ({ title, subtitle, data, columns })
                     backgroundColor: selectedRows.includes(index) ? '#e8f5e9' : 'white',
                     width: '48px'
                   }}>
-                    <Checkbox checked={selectedRows.includes(index)} />
+                    <Checkbox checked={selectedRows.includes(index)} 
+                      sx={{
+                        '& .MuiSvgIcon-root': {
+                          fontSize: 16,
+                        },
+                        '& .MuiCheckbox-root': {
+                          padding: 0,
+                        },
+                        '& .MuiCheckbox-root .MuiSvgIcon-root': {
+                          border: '1px solid rgba(0, 0, 0, 0.1)',
+                          borderRadius: '2px',
+                        },
+                        '&.Mui-checked': {
+                          color: '#027056',
+                        },
+                        '&.MuiCheckbox-indeterminate': {
+                          color: '#027056',
+                        }
+                      }}
+                    />
                   </TableCell>
                   {columns.map((column) => (
                     <TableCell
