@@ -1,0 +1,157 @@
+{
+    "id": "test-page",
+    "brandId": "test-brand",
+    "name": "Blinkit",
+    "logo": "https://example.com/logo.png",
+    "description": "Test analytics dashboard",
+    "active": true,
+    "cards": [
+      {
+        "id": "sales-trend",
+        "title": "Sales (MRP)",
+        "active": true,
+        "visualizationType": "linechart",
+        "gridstackProperties": {
+          "x": 0,
+          "y": 0,
+          "w": 4,
+          "h": 2
+        },
+        "query": [
+          {
+            "measures": ["Sales.total"],
+            "timeDimensions": [
+              {
+                "dimension": "Sales.date",
+                "granularity": "day",
+                "dateRange": ["2024-01-01", "2024-03-31"]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "revenue-trend",
+        "title": "Total Quantity Sold",
+        "active": true,
+        "visualizationType": "linechart",
+        "gridstackProperties": {
+          "x": 4,
+          "y": 0,
+          "w": 4,
+          "h": 2
+        },
+        "query": [
+          {
+            "measures": ["Revenue.total"],
+            "timeDimensions": [
+              {
+                "dimension": "Revenue.date",
+                "granularity": "day",
+                "dateRange": ["2024-01-01", "2024-03-31"]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "top-cities",
+        "title": "Top Cities",
+        "active": true,
+        "visualizationType": "semipie",
+        "gridstackProperties": {
+          "x": 8,
+          "y": 0,
+          "w": 4,
+          "h": 2
+        }
+      },
+      {
+        "id": "top-products",
+        "title": "SKU Level Data",
+        "subtitle": "Analytics for all your SKUs",
+        "active": true,
+        "visualizationType": "table",
+        "gridstackProperties": {
+          "x": 0,
+          "y": 2,
+          "w": 6,
+          "h": 2
+        },
+        "datatableProperties": {
+          "columnOrder": [
+            "product_id",
+            "product_name",
+            "sales_mrp_sum",
+            "qty_sold",
+            "drr_7",
+            "drr_14",
+            "drr_30",
+            "days_of_inventory_14",
+            "days_of_inventory_max",
+            "on_shelf_availability",
+            "rank_avg",
+            "selling_price_avg",
+            "discount_avg"
+          ],
+          "columnsVisible": {
+            "product_id": false,
+            "product_name": true,
+            "sales_mrp_sum": true,
+            "qty_sold": true,
+            "drr_7": true,
+            "drr_14": true,
+            "drr_30": false,
+            "days_of_inventory_14": false,
+            "days_of_inventory_max": false,
+            "on_shelf_availability": false,
+            "rank_avg": false,
+            "selling_price_avg": false,
+            "discount_avg": false
+          }
+        }
+      },
+      {
+        "id": "top-categories",
+        "title": "Category level data",
+        "subtitle": "Analytics for all your categories",
+        "active": true,
+        "visualizationType": "table",
+        "gridstackProperties": {
+          "x": 6,
+          "y": 2,
+          "w": 6,
+          "h": 2
+        },
+        "datatableProperties": {
+          "columnOrder": [
+            "category_id",
+            "category_name",
+            "orders_count",
+            "revenue_sum",
+            "avg_order_value",
+            "unique_products",
+            "drr_7",
+            "drr_14",
+            "drr_30",
+            "days_of_inventory_14",
+            "days_of_inventory_max"
+          ],
+          "columnsVisible": {
+            "category_id": false,
+            "category_name": true,
+            "orders_count": true,
+            "revenue_sum": true,
+            "avg_order_value": true,
+            "unique_products": true,
+            "drr_7": false,
+            "drr_14": false,
+            "drr_30": false,
+            "days_of_inventory_14": false,
+            "days_of_inventory_max": false
+          }
+        }
+      }
+    ]
+  }
+  
