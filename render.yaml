@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: blinkit-analytics
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run preview
+    staticPublishPath: ./dist
+    envVars:
+      - key: NODE_VERSION
+        value: 18.17.0 
