@@ -37,6 +37,7 @@ const DataTable: React.FC<DataTableProps> = ({ title, subtitle, data, columns })
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [sortConfig, setSortConfig] = useState<SortConfig>({ key: '', direction: 'asc' });
 
+
   const handleRowSelect = (rowIndex: number) => {
     setSelectedRows(prev => 
       prev.includes(rowIndex) 
@@ -99,12 +100,12 @@ const DataTable: React.FC<DataTableProps> = ({ title, subtitle, data, columns })
   const formatValue = (value: any, field: string) => {
     if (typeof value === 'number') {
       if (field.includes('price') || field.includes('sum')) {
-        return `₹${value.toLocaleString()}`;
+        return `₹${value.toFixed(2).toLocaleString()}`;
       }
       if (field.includes('percent') || field.includes('drr')) {
-        return `${value}%`;
+        return `${value.toFixed(2)}%`;
       }
-      return value.toLocaleString();
+      return value.toFixed(2).toLocaleString();
     }
     return value;
   };
@@ -112,7 +113,7 @@ const DataTable: React.FC<DataTableProps> = ({ title, subtitle, data, columns })
   return (
     <Box sx={{ mt: 1 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', mb: 1}}>
-        <Typography  sx={{ fontWeight: 500, fontSize: '20px' }}>{title}</Typography>
+        <Typography  sx={{ fontWeight: 700, fontSize: '20px' }}>{title}</Typography>
         {subtitle && (
           <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0, fontSize: '14px' }}>
             {subtitle}
@@ -180,7 +181,9 @@ const DataTable: React.FC<DataTableProps> = ({ title, subtitle, data, columns })
                       {column.field.includes('price') || column.field.includes('sum') ? (
                         <CurrencyRupee sx={{ fontSize: 14, mr: 0.5 }} />
                       ) : null}
-                      {column.headerName}
+                      {column.headerName.includes('.') ? column.headerName.split('.').pop()?.split('_').map(word => 
+                      word.charAt(0).toUpperCase() + word.slice(1)
+                    ).join(' ') : column.headerName}
                       {renderSortIcon(column.field)}
                     </Box>
                   </TableCell>

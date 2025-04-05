@@ -17,19 +17,9 @@
           "w": 4,
           "h": 2
         },
-        "query": [
-          {
-            "measures": ["Sales.total"],
-            "timeDimensions": [
-              {
-                "dimension": "Sales.date",
-                "granularity": "day",
-                "dateRange": ["2024-01-01", "2024-03-31"]
-              }
-            ]
-          }
-        ]
+        "query": "[{\"measures\":[\"blinkit_insights_sku.sales_mrp_sum\"],\"timeDimensions\":[{\"dimension\":\"blinkit_insights_sku.created_at\",\"dateRange\":[\"2025-02-01\",\"2025-02-28\"],\"granularity\":\"month\"}]},{\"measures\":[\"blinkit_insights_sku.sales_mrp_sum\"],\"timeDimensions\":[{\"dimension\":\"blinkit_insights_sku.created_at\",\"dateRange\":[\"2025-02-01\",\"2025-02-28\"],\"granularity\":\"day\"}],\"order\":{\"blinkit_insights_sku.created_at\":\"asc\"}}]"
       },
+      
       {
         "id": "revenue-trend",
         "title": "Total Quantity Sold",
@@ -41,18 +31,7 @@
           "w": 4,
           "h": 2
         },
-        "query": [
-          {
-            "measures": ["Revenue.total"],
-            "timeDimensions": [
-              {
-                "dimension": "Revenue.date",
-                "granularity": "day",
-                "dateRange": ["2024-01-01", "2024-03-31"]
-              }
-            ]
-          }
-        ]
+        "query": "[{\"measures\":[\"blinkit_insights_sku.qty_sold\"],\"timeDimensions\":[{\"dimension\":\"blinkit_insights_sku.created_at\",\"dateRange\":[\"2025-02-01\",\"2025-02-28\"],\"granularity\":\"month\" }],\"order\":{\"blinkit_insights_sku.created_at\":\"asc\"}},{\"measures\":[\"blinkit_insights_sku.qty_sold\"],\"timeDimensions\":[{\"dimension\":\"blinkit_insights_sku.created_at\",\"dateRange\":[\"2025-02-01\",\"2025-02-28\"],\"granularity\":\"day\"}],\"order\":{\"blinkit_insights_sku.created_at\":\"asc\"}}]"
       },
       {
         "id": "top-cities",
@@ -64,7 +43,8 @@
           "y": 0,
           "w": 4,
           "h": 2
-        }
+        },
+        "query": "[{\"measures\":[\"blinkit_insights_city.sales_mrp_sum\"],\"order\":{\"blinkit_insights_city.sales_mrp_sum\":\"desc\"},\"dimensions\":[\"blinkit_insights_city.name\"],\"timeDimensions\":[{\"dimension\":\"blinkit_insights_city.created_at\",\"dateRange\": [\"2025-02-01\",\"2025-02-28\"], \"granularity\":\"month\"}],\"limit\":4}]"
       },
       {
         "id": "top-products",
@@ -78,36 +58,46 @@
           "w": 6,
           "h": 2
         },
+        "query": "[{\"measures\":[\"blinkit_insights_sku.sales_mrp_sum\",\"blinkit_insights_sku.qty_sold\",\"blinkit_insights_sku.drr_7\",\"blinkit_insights_sku.drr_14\",\"blinkit_insights_sku.drr_30\",\"blinkit_insights_sku.sales_mrp_max\",\"blinkit_insights_sku.month_to_date_sales\",\"blinkit_insights_sku.be_inv_qty\",\"blinkit_insights_sku.fe_inv_qty\",\"blinkit_insights_sku.inv_qty\",\"blinkit_insights_sku.days_of_inventory_14\",\"blinkit_insights_sku.days_of_inventory_max\",\"blinkit_scraping_stream.on_shelf_availability\",\"blinkit_scraping_stream.rank_avg\",\"blinkit_scraping_stream.selling_price_avg\",\"blinkit_scraping_stream.discount_avg\"],\"dimensions\":[\"blinkit_insights_sku.id\",\"blinkit_insights_sku.name\"],\"timeDimensions\":[{\"dimension\":\"blinkit_insights_sku.created_at\",\"dateRange\":[\"2025-02-01\",\"2025-02-28\"],\"granularity\":\"day\"}],\"limit\":8}]",
         "datatableProperties": {
           "columnOrder": [
-            "product_id",
-            "product_name",
-            "sales_mrp_sum",
-            "qty_sold",
-            "drr_7",
-            "drr_14",
-            "drr_30",
-            "days_of_inventory_14",
-            "days_of_inventory_max",
-            "on_shelf_availability",
-            "rank_avg",
-            "selling_price_avg",
-            "discount_avg"
+            "blinkit_insights_sku.name",
+            "blinkit_insights_sku.sales_mrp_sum",
+            "blinkit_insights_sku.qty_sold",
+            "blinkit_insights_sku.drr_7",
+            "blinkit_insights_sku.drr_14",
+            "blinkit_insights_sku.days_of_inventory_14",
+            "blinkit_insights_sku.drr_30",
+            "blinkit_insights_sku.sales_mrp_max",
+            "blinkit_insights_sku.month_to_date_sales",
+            "blinkit_insights_sku.be_inv_qty",
+            "blinkit_insights_sku.fe_inv_qty",
+            "blinkit_insights_sku.inv_qty",
+            "blinkit_insights_sku.days_of_inventory_max",
+            "blinkit_scraping_stream.on_shelf_availability",
+            "blinkit_scraping_stream.selling_price_avg",
+            "blinkit_scraping_stream.discount_avg",
+            "blinkit_scraping_stream.rank_avg"
           ],
           "columnsVisible": {
-            "product_id": false,
-            "product_name": true,
-            "sales_mrp_sum": true,
-            "qty_sold": true,
-            "drr_7": true,
-            "drr_14": true,
-            "drr_30": false,
-            "days_of_inventory_14": false,
-            "days_of_inventory_max": false,
-            "on_shelf_availability": false,
-            "rank_avg": false,
-            "selling_price_avg": false,
-            "discount_avg": false
+            "blinkit_scraping_stream.rank_avg": true,
+            "blinkit_scraping_stream.discount_avg": true,
+            "blinkit_insights_sku.month_to_date_sales": true,
+            "blinkit_insights_sku.name": true,
+            "blinkit_insights_sku.days_of_inventory_14": false,
+            "blinkit_insights_sku.drr_30": true,
+            "blinkit_insights_sku.days_of_inventory_max": false,
+            "blinkit_insights_sku.drr_7": false,
+            "blinkit_scraping_stream.selling_price_avg": false,
+            "blinkit_insights_sku.sales_mrp_max": false,
+            "blinkit_insights_sku.id": false,
+            "blinkit_scraping_stream.on_shelf_availability": false,
+            "blinkit_insights_sku.be_inv_qty": false,
+            "blinkit_insights_sku.inv_qty": false,
+            "blinkit_insights_sku.fe_inv_qty": false,
+            "blinkit_insights_sku.drr_14": false,
+            "blinkit_insights_sku.sales_mrp_sum": false,
+            "blinkit_insights_sku.qty_sold": false
           }
         }
       },
@@ -123,32 +113,47 @@
           "w": 6,
           "h": 2
         },
+        "query": "[{\"measures\":[\"blinkit_insights_city.sales_mrp_sum\",\"blinkit_insights_city.qty_sold\",\"blinkit_insights_city.drr_7\",\"blinkit_insights_city.drr_14\",\"blinkit_insights_city.drr_30\",\"blinkit_insights_city.sales_mrp_max\",\"blinkit_insights_city.month_to_date_sales\",\"blinkit_insights_city.be_inv_qty\",\"blinkit_insights_city.fe_inv_qty\",\"blinkit_insights_city.inv_qty\",\"blinkit_insights_city.days_of_inventory_14\",\"blinkit_insights_city.days_of_inventory_max\",\"blinkit_scraping_stream.on_shelf_availability\",\"blinkit_scraping_stream.rank_avg\",\"blinkit_scraping_stream.selling_price_avg\",\"blinkit_scraping_stream.discount_avg\"],\"dimensions\":[\"blinkit_insights_city.id\",\"blinkit_insights_city.name\"],\"timeDimensions\":[{\"dimension\":\"blinkit_insights_city.created_at\",\"dateRange\":[\"2025-02-01\",\"2025-02-28\"],\"granularity\":\"day\"}],\"limit\":10}]",
         "datatableProperties": {
           "columnOrder": [
-            "category_id",
-            "category_name",
-            "orders_count",
-            "revenue_sum",
-            "avg_order_value",
-            "unique_products",
-            "drr_7",
-            "drr_14",
-            "drr_30",
-            "days_of_inventory_14",
-            "days_of_inventory_max"
+            "blinkit_insights_city.id",
+            "blinkit_insights_city.name",
+            "blinkit_insights_city.sales_mrp_sum",
+            "blinkit_insights_city.qty_sold",
+            "blinkit_insights_city.drr_7",
+            "blinkit_insights_city.drr_14",
+            "blinkit_insights_city.days_of_inventory_14",
+            "blinkit_insights_city.drr_30",
+            "blinkit_insights_city.sales_mrp_max",
+            "blinkit_insights_city.month_to_date_sales",
+            "blinkit_insights_city.be_inv_qty",
+            "blinkit_insights_city.fe_inv_qty",
+            "blinkit_insights_city.inv_qty",
+            "blinkit_insights_city.days_of_inventory_max",
+            "blinkit_scraping_stream.on_shelf_availability",
+            "blinkit_scraping_stream.selling_price_avg",
+            "blinkit_scraping_stream.discount_avg",
+            "blinkit_scraping_stream.rank_avg"
           ],
           "columnsVisible": {
-            "category_id": false,
-            "category_name": true,
-            "orders_count": true,
-            "revenue_sum": true,
-            "avg_order_value": true,
-            "unique_products": true,
-            "drr_7": false,
-            "drr_14": false,
-            "drr_30": false,
-            "days_of_inventory_14": false,
-            "days_of_inventory_max": false
+            "blinkit_scraping_stream.rank_avg": true,
+            "blinkit_insights_city.fe_inv_qty": true,
+            "blinkit_scraping_stream.discount_avg": false,
+            "blinkit_insights_city.sales_mrp_sum": false,
+            "blinkit_insights_city.drr_7": true,
+            "blinkit_insights_city.drr_14": false,
+            "blinkit_insights_city.sales_mrp_max": false,
+            "blinkit_insights_city.drr_30": true,
+            "blinkit_scraping_stream.selling_price_avg": true,
+            "blinkit_insights_city.days_of_inventory_max": false,
+            "blinkit_insights_city.month_to_date_sales": false,
+            "blinkit_insights_city.be_inv_qty": false,
+            "blinkit_insights_city.id": false,
+            "blinkit_insights_city.days_of_inventory_14": false,
+            "blinkit_insights_city.inv_qty": false,
+            "blinkit_insights_city.qty_sold": false,
+            "blinkit_scraping_stream.on_shelf_availability": false,
+            "blinkit_insights_city.name": true
           }
         }
       }
