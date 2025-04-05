@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { CssBaseline, ThemeProvider, createTheme, Box } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers-pro/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers-pro/AdapterDateFns';
-import Navigation from './components/Navigation';
-import BrandSidebar from './components/BrandSidebar';
-import MainContent from './components/MainContent';
 import '@fontsource/mulish/300.css';
 import '@fontsource/mulish/400.css';
 import '@fontsource/mulish/500.css';
 import '@fontsource/mulish/600.css';
 import '@fontsource/mulish/700.css';
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MainContent from './pages/MainContent'
+import BrandSidebar from './layout/BrandSidebar';
+import Navigation from './layout/Navigation';
 const theme = createTheme({
   palette: {
     background: {
@@ -26,7 +26,7 @@ function App() {
   const brands = ['Perfora', 'Mama Earth', 'Boat'];
   const [selectedBrand, setSelectedBrand] = useState('Perfora');
   const [selectedNavItem, setSelectedNavItem] = useState('Overview');
-
+  const queryClient = new QueryClient();
   const handleAddBrand = () => {
     console.log('Add brand clicked');
   };
@@ -42,6 +42,7 @@ function App() {
   };
 
   return (
+    <QueryClientProvider client={queryClient}>
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <CssBaseline />
@@ -57,6 +58,7 @@ function App() {
         </Box>
       </LocalizationProvider>
     </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 

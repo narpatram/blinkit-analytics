@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
   Paper,
   Stack,
   Button,
-  useTheme,
+  useTheme, 
   useMediaQuery,
   IconButton,
 } from '@mui/material';
 import { ShowChart, HelpOutline } from '@mui/icons-material';
-import ChartContainer from './charts/ChartContainer';
-import DataTable from './DataTable';
+import ChartContainer from '../components/charts/ChartContainer';
+import DataTable from '../components/DataTable';
 import config from '../configs/config.json';
 import { sampleData } from '../configs/sampleData';
-import IOSSwitch from './IOSSwitch';
-import CustomDateRangePicker from './CustomDateRangePicker';
+import IOSSwitch from '../components/IOSSwitch';
+import CustomDateRangePicker from '../components/CustomDateRangePicker';
 import blinkitLogo from '../assets/blinkit.png';
 import instamartLogo from '../assets/instamart.png';
 import zeptoLogo from '../assets/Zepto.png';
+import cubejsApi from '../services/cubejs/config';
 
 interface MainContentProps {
   selectedItem: string;
@@ -30,6 +31,38 @@ const MainContent: React.FC<MainContentProps> = ({ selectedItem }) => {
   const [viewMode, setViewMode] = useState('graph');
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
   const [activeTab, setActiveTab] = useState('blinkit');
+  const [tableData, setTableData] = useState<{ [key: string]: any[] }>({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const dataMap: { [key: string]: any[] } = {};
+
+      for (const card of config.cards) {
+        if (card.active ) {
+          try {
+            const query = JSON.parse(card.query);
+            const resultSet = await Promise.all(query.map(query => cubejsApi.load(query)));
+            const flattenedData = resultSet.flatMap(res => res.rawData());
+            const transformedData = flattenedData.map(item => {
+              return Object.fromEntries(
+                Object.entries(item).map(([key, value]) => {
+                  const newKey = key.includes('.') ? key.split('.').pop() : key;
+                  return [newKey, value];
+                })
+              );
+            });
+            dataMap[card.id] = flattenedData
+          } catch (error) {
+            console.error(`Error fetching data for ${card.title}:`, error);
+          }
+        }
+      }
+
+      setTableData(dataMap);
+    };
+
+    fetchData();
+  }, []);
 
   const handleViewModeChange = () => {
     setViewMode(viewMode === 'graph' ? 'table' : 'graph');
@@ -40,13 +73,12 @@ const MainContent: React.FC<MainContentProps> = ({ selectedItem }) => {
   };
 
   const renderCharts = () => {
-    // Filter active cards and sort by x position
     const activeCards = config.cards
       .filter(card => card.active && (card.visualizationType === 'linechart' || card.visualizationType === 'semipie'))
       .sort((a, b) => a.gridstackProperties.x - b.gridstackProperties.x);
 
     return activeCards.map((card) => {
-      const data = sampleData[card.id];
+      const data = tableData[card.id];
       
       return (
         <ChartContainer
@@ -286,7 +318,6 @@ const MainContent: React.FC<MainContentProps> = ({ selectedItem }) => {
           backgroundColor: "#FAFAFA",
           p: 2
         }}>
-          {/* Charts Row */}
           <Box sx={{ 
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
@@ -296,23 +327,20 @@ const MainContent: React.FC<MainContentProps> = ({ selectedItem }) => {
             {renderCharts()}
           </Box>
 
-          {/* Tables Section */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {config.cards
               .filter(card => card.active && card.visualizationType === 'table' && card.datatableProperties)
               .sort((a, b) => a.gridstackProperties.x - b.gridstackProperties.x)
               .map(card => {
-                const data = sampleData[card.id];
-                if (!data?.rows) return null;
+                const data = tableData[card.id];
+                if (!data) return null;
 
                 const columns = card.datatableProperties.columnOrder
                   .filter(field => card.datatableProperties.columnsVisible[field])
                   .map(field => ({
                     field,
-                    headerName: field.split('_').map(word => 
-                      word.charAt(0).toUpperCase() + word.slice(1)
-                    ).join(' '),
-                    width: 150,
+                    headerName: field,
+                    width: 100,
                     flex: 1
                   }));
 
@@ -321,7 +349,7 @@ const MainContent: React.FC<MainContentProps> = ({ selectedItem }) => {
                     key={card.id}
                     title={card.title}
                     subtitle={card.subtitle}
-                    data={data.rows}
+                    data={data}
                     columns={columns}
                   />
                 );

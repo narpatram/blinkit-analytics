@@ -10,15 +10,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cubejs-client/core": "^0.34.60",
+    "@cubejs-client/react": "^0.34.60",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@fontsource/mulish": "^5.2.5",
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.10",
     "@mui/x-date-pickers-pro": "^7.28.2",
+    "@tanstack/react-query": "^5.71.10",
     "@types/node": "^22.14.0",
     "axios": "^1.8.4",
     "date-fns": "^2.30.0",
+    "dayjs": "^1.11.13",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "recharts": "^2.15.1"

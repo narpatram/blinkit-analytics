@@ -11,6 +11,9 @@ import {
 } from 'recharts';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton'
+import { convertKeyToNumber, formatToIndianNumbering } from '../../utils/helper';
+import dayjs from 'dayjs';
 
 interface AreaChartProps {
   data: any[];
@@ -22,6 +25,7 @@ interface AreaChartProps {
 }
 
 const AreaChart: React.FC<AreaChartProps> = ({ data, title, value1Key, value2Key, color1, color2 }) => {
+  console.log(value1Key, title, data)
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -33,11 +37,13 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, title, value1Key, value2Key
       )
       .join(' ');
   };
+  console.log(dayjs("2025-02-12T00:00:00.000").date().toString())
 
   return (
     <div style={{ width: '100%', height: 200 }}>
-      <ResponsiveContainer >
-        <RechartsAreaChart data={data} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+    {
+      data?.length > 0 ? (<ResponsiveContainer >
+        <RechartsAreaChart data={convertKeyToNumber(data, value1Key )} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id={`color${value1Key}`} x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor={color1} stopOpacity={0.2}/>
@@ -46,12 +52,12 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, title, value1Key, value2Key
           </defs>
           <CartesianGrid  horizontal={true} vertical={false} stroke='#e0e0e0'/>
           <XAxis 
-            dataKey="name" 
+            dataKey="created_at" 
             axisLine={false}
             tickLine={false}
-            tickFormatter={(value) => Number(value).toFixed(1)}
             tick={{ fontSize: isMobile ? 10 : 12 }}
             padding={{ left: 0, right: 0 }}
+            tickFormatter={(value) => dayjs(value).date().toString()}
           />
           <YAxis 
             axisLine={false}
@@ -59,6 +65,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, title, value1Key, value2Key
             domain={[1, 10]}
             tick={{ fontSize: isMobile ? 10 : 12 }}
             width={30}
+            tickFormatter={(value) => formatToIndianNumbering(value)}
           />
           <Tooltip 
             contentStyle={{ 
@@ -86,7 +93,9 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, title, value1Key, value2Key
           <Area type="monotone" dataKey={value1Key} stroke={color1} fillOpacity={1} fill={`url(#color${value1Key})`} />
           <Area type="monotone" dataKey={value2Key} stroke={color2} strokeDasharray="5 5" fillOpacity={0} />
         </RechartsAreaChart>
-      </ResponsiveContainer>
+      </ResponsiveContainer>) : <Skeleton variant="rectangular" width="100%" height="100%" />
+    }
+      
     </div>
   );
 };
