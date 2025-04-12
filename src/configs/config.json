@@ -80,7 +80,7 @@
             "blinkit_scraping_stream.rank_avg"
           ],
           "columnsVisible": {
-            "blinkit_scraping_stream.rank_avg": true,
+            "blinkit_scraping_stream.rank_avg": false,
             "blinkit_scraping_stream.discount_avg": true,
             "blinkit_insights_sku.month_to_date_sales": true,
             "blinkit_insights_sku.name": true,
